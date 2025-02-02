@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Models;
+
 use App\Models\Scopes\TenantScope;
-use App\Models\Talk;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -33,6 +33,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected static function booted()
+    {
+        static::addGlobalScope(new TenantScope);
+    }
+
+    public function talks()
+    {
+        return $this->hasMany(Talk::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -44,15 +54,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    protected static function booted()
-    {
-        static::addGlobalScope(new TenantScope);
-    }
-
-    public function talks()
-    {
-        return $this->hasMany(Talk::class);
     }
 }

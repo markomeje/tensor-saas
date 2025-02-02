@@ -1,11 +1,11 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\Conference;
 use App\Models\Talk;
 use App\Models\Tenant;
 use App\Models\User;
-use Database\Factories\ConferenceFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
             ->has(Talk::factory()->count(5))
             ->create(['tenant_id' => rand(1, 9)]);
 
-            Conference::factory()->count(5)->create();
+        Conference::factory()->count(5)->create();
     }
 }
