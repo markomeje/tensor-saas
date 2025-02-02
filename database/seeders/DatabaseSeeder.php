@@ -1,9 +1,11 @@
 <?php
 
 namespace Database\Seeders;
-
+use App\Models\Conference;
+use App\Models\Talk;
+use App\Models\Tenant;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\ConferenceFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Tenant::factory()->count(9)->create();
+        User::factory()
+            ->count(34)
+            ->has(Talk::factory()->count(5))
+            ->create(['tenant_id' => rand(1, 9)]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+            Conference::factory()->count(5)->create();
     }
 }
