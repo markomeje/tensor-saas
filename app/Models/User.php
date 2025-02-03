@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Models;
-
-use App\Models\Scopes\TenantScope;
+use App\Traits\BelongsToTenantTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, BelongsToTenantTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -33,11 +31,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new TenantScope);
-    }
-
     public function talks()
     {
         return $this->hasMany(Talk::class);
@@ -54,5 +47,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

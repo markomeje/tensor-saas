@@ -1,0 +1,12 @@
+<?php
+
+namespace {{ namespace }};
+use App\Traits\BelongsToTenantTrait;
+{{ factoryImport }}
+use Illuminate\Database\Eloquent\Model;
+
+class {{ class }} extends Model
+{
+    {{ factory }}
+    use BelongsToTenantTrait;
+}
