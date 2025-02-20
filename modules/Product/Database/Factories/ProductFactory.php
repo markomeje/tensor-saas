@@ -1,14 +1,15 @@
 <?php
 
-namespace Database\Factories;
+namespace Modules\Product\Database\Factories;
 use App\Enums\TalkTypeEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Product\Models\Product;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Talk>
  */
-class TalkFactory extends Factory
+class ProductFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,6 +18,9 @@ class TalkFactory extends Factory
      */
     public function definition(): array
     {
+        $product = new Product();
+        $product->getCreatedAtColumn();
+
         return [
             'user_id' => User::factory(),
             'title' => fake()->sentence(),
